@@ -15,12 +15,12 @@
     "node": ">=14.18"
   },
   "bin": {
-    "pika": "./vite/cli.js"
+    "pika": "./src/vite/cli.js"
   },
   "exports": {
-    "./client": "./client/mod.js",
-    "./vite": "./vite/mod.js",
-    "./globals": "./globals/mod.js"
+    "./client": "./src/client/mod.js",
+    "./vite": "./src/vite/mod.js",
+    "./globals": "./src/globals/mod.js"
   },
   "dependencies": {
     "komando": "^1.0.2",
@@ -42,6 +42,14 @@
     "test": "echo"
   },
   "publishConfig": {
-    "directory": "dist"
+    "directory": "dist",
+    "bin": {
+      "pika": "./vite/cli.js"
+    },
+    "exports": {
+      "./client": "./client/mod.js",
+      "./vite": "./vite/mod.js",
+      "./globals": "./globals/mod.js"
+    }
   }
 }

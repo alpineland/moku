@@ -40,9 +40,13 @@ function pkgJSON() {
     'exports',
     'dependencies',
     'peerDependencies',
+    'publishConfig',
   ]
   const filtered = Object.fromEntries(
-    Object.entries(pkg).filter(([k]) => fields.includes(k)),
+    Object.entries(pkg).filter(([k]) => {
+      if (k === 'publishConfig') delete pkg[k].directory
+      return fields.includes(k)
+    }),
   )
   return {
     writeBundle() {
@@ -74,7 +78,7 @@ function config(input, outDir) {
         writeBundle(opts) {
           fs.writeFileSync(
             path.join(opts.dir, 'index.d.ts'),
-            `export * from './mod'`,
+            `export * from './mod';`,
           )
         },
       },
