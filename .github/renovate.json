@@ -1,0 +1,6 @@
+{
+  "extends": ["config:base", "schedule:weekly", "group:allNonMajor"],
+  "labels": ["deps"],
+  "rangeStrategy": "bump",
+  "ignoreDeps": ["node"]
+}

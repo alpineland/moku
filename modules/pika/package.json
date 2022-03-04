@@ -1,0 +1,47 @@
+{
+  "name": "pika",
+  "description": "",
+  "version": "0.1.0",
+  "type": "module",
+  "author": "Jeff Yang",
+  "license": "MIT",
+  "keywords": [
+    "vue",
+    "vite",
+    "vite-plugin",
+    "pika"
+  ],
+  "engines": {
+    "node": ">=14.18"
+  },
+  "bin": {
+    "pika": "./vite/cli.js"
+  },
+  "exports": {
+    "./client": "./client/mod.js",
+    "./vite": "./vite/mod.js",
+    "./globals": "./globals/mod.js"
+  },
+  "dependencies": {
+    "komando": "^1.0.2",
+    "picocolors": "^1.0.0",
+    "undici": "^4.14.1"
+  },
+  "devDependencies": {
+    "vite": "2.8.4",
+    "vue": "3.2.31",
+    "vue-router": "4.0.12"
+  },
+  "peerDependencies": {
+    "vite": "^2.8",
+    "vue": "^3.2",
+    "vue-router": "^4"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "test": "echo"
+  },
+  "publishConfig": {
+    "directory": "dist"
+  }
+}

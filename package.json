@@ -1,0 +1,29 @@
+{
+  "name": "pika-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "prettier": "@ydcjeff/prettier-config",
+  "eslintConfig": {
+    "extends": "@ydcjeff"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.19",
+    "@ydcjeff/eslint-config": "0.2.1",
+    "@ydcjeff/prettier-config": "0.2.1",
+    "@ydcjeff/tsconfig": "0.2.1",
+    "eslint": "8.10.0",
+    "prettier": "2.5.1",
+    "prompts": "2.4.2",
+    "rollup": "2.68.0",
+    "semver": "7.3.5",
+    "uvu": "0.5.3"
+  },
+  "scripts": {
+    "build": "pnpm run build -r",
+    "test": "pnpm run test -r",
+    "fmt": "prettier -w --ignore-unknown .",
+    "lint": "eslint --ext .js --ignore-path .gitignore .",
+    "preinstall": "git config core.hooksPath .githooks"
+  }
+}

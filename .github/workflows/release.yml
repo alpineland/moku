@@ -1,0 +1,45 @@
+name: release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    if: github.repository == 'alpineland/pika'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6
+
+      - name: Get module name for tag
+        id: tag
+        run: |
+          # `%@*` truncates @ and version number from the right side.
+          # https://stackoverflow.com/questions/9532654/expression-after-last-specific-character
+          module=${GITHUB_REF_NAME%@*}
+          echo "::set-output name=module::$module"
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+          cache: pnpm
+          cache-dependency-path: '**/package.json'
+
+      - run: pnpm i
+      - run: pnpm run build
+      - run: pnpm publish -r --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - uses: yyx990803/release-tag@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          body: |
+            Please refer to [CHANGELOG.md](https://github.com/alpineland/pika/blob/main/modules/${{ steps.tag.outputs.module }}/CHANGELOG.md) for details.

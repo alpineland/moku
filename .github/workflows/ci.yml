@@ -1,0 +1,38 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node_version: [14, 16]
+        os: [ubuntu-latest]
+        include:
+          - node_version: 16
+            os: macOS-latest
+          - node_version: 16
+            os: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node_version }}
+          cache: pnpm
+          cache-dependency-path: '**/package.json'
+
+      - run: pnpm i
+      - run: pnpm run build
+      - run: pnpm run test
