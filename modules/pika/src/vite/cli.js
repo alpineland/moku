@@ -99,9 +99,9 @@ const devCommand = defineCommand({
       const { version } = require('vite/package.json')
 
       info(
-        pc.cyan(`\n  vite v${version}`) +
+        pc.cyan(`\n  vite ${version}`) +
           ' + ' +
-          pc.yellow('pika v__VERSION__') +
+          pc.yellow('pika __VERSION__') +
           pc.green(` dev server running at:\n`),
         { clear: !server.config.logger.hasWarned },
       )
