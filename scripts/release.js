@@ -26,26 +26,26 @@ async function main() {
   const log = console.log
   const run = (bin, args) => {
     const { stderr, stdout, error } = spawnSync(bin, args)
-    if (stderr) console.log(stderr.toString())
-    if (stdout) console.log(stdout.toString())
+    if (stderr) log(stderr.toString())
+    if (stdout) log(stdout.toString())
     if (error) throw error
   }
 
-  const { mod } = await prompts({
+  const { module } = await prompts({
     type: 'select',
-    name: 'mod',
+    name: 'module',
     message: 'Select module',
     choices: modules.map((i) => ({ value: i, title: i })),
   })
 
-  if (!mod) return
+  if (!module) return
 
   const require = createRequire(import.meta.url)
-  const pkgPath = path.join(process.cwd(), 'modules', mod)
-  const pkgJSONPath = path.join(pkgPath, 'package.json')
-  const pkgJSON = require(pkgJSONPath)
+  const modulePath = path.join(process.cwd(), 'modules', module)
+  const pkgJSONPath = path.join(modulePath, 'package.json')
+  const pkg = require(pkgJSONPath)
 
-  const inc = (i) => semver.inc(pkgJSON.version, i, 'beta')
+  const inc = (i) => semver.inc(pkg.version, i, 'beta')
 
   const { release } = await prompts({
     type: 'select',
@@ -61,7 +61,7 @@ async function main() {
     throw new Error(`invalid target version: ${release}`)
   }
 
-  const tag = `${pkgJSON.name}@${release}`
+  const tag = `${pkg.name}@${release}`
 
   const { yes } = await prompts({
     type: 'confirm',
@@ -77,13 +77,13 @@ async function main() {
   log('Generating changelog...')
   run('chlog', [
     '-o',
-    path.join(pkgPath, 'CHANGELOG.md'),
+    path.join(modulePath, 'CHANGELOG.md'),
     '-t',
     tag,
     '--commit-path',
-    pkgPath,
+    modulePath,
   ])
-  run('pnpm', ['prettier', '--write', path.join(pkgPath, 'CHANGELOG.md')])
+  run('pnpm', ['prettier', '--write', path.join(modulePath, 'CHANGELOG.md')])
 
   const { chlogOk } = await prompts({
     type: 'confirm',
