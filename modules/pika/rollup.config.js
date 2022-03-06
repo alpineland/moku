@@ -87,7 +87,7 @@ function config(input, outDir) {
 }
 
 export default [
-  config(['./src/client/mod.js'], './dist/client'),
+  config(['./src/runtime/mod.js'], './dist/runtime'),
   config(['./src/vite/mod.js', './src/vite/cli.js'], './dist/vite'),
   config(['./src/globals/mod.js'], './dist/globals'),
 ]
