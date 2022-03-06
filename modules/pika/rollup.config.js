@@ -6,6 +6,7 @@ import { defineConfig } from 'rollup'
 
 fs.rmSync('./dist', { recursive: true, force: true })
 
+const format = 'esm'
 const external = [
   ...Object.keys(pkg.peerDependencies),
   ...Object.keys(pkg.dependencies),
@@ -55,39 +56,55 @@ function pkgJSON() {
   }
 }
 
-/**
- * @param {import('rollup').InputOption} input
- * @param {string} outDir
- */
-function config(input, outDir) {
-  return defineConfig({
-    input: input,
+const plugins = [
+  injectModulePath(),
+  pkgJSON(),
+  { transform: (code) => code.replace(/__VERSION__/g, pkg.version) },
+  {
+    writeBundle(opts) {
+      fs.writeFileSync(
+        path.join(opts.dir, 'index.d.ts'),
+        `export * from './mod';`,
+      )
+    },
+  },
+]
+
+export default defineConfig([
+  {
+    input: ['./src/universal/mod.js'],
     output: {
-      dir: outDir,
-      entryFileNames: '[name].js',
-      chunkFileNames: '_[name]_[hash].js',
-      format: 'esm',
-      generatedCode: 'es2015',
+      dir: './dist/universal',
+      format,
     },
     external,
-    plugins: [
-      injectModulePath(),
-      pkgJSON(),
-      { transform: (code) => code.replace(/__VERSION__/g, pkg.version) },
-      {
-        writeBundle(opts) {
-          fs.writeFileSync(
-            path.join(opts.dir, 'index.d.ts'),
-            `export * from './mod';`,
-          )
-        },
-      },
-    ],
-  })
-}
-
-export default [
-  config(['./src/runtime/mod.js'], './dist/runtime'),
-  config(['./src/vite/mod.js', './src/vite/cli.js'], './dist/vite'),
-  config(['./src/globals/mod.js'], './dist/globals'),
-]
+    plugins,
+  },
+  {
+    input: ['./src/globals/mod.js'],
+    output: {
+      dir: './dist/globals',
+      format,
+    },
+    external,
+    plugins,
+  },
+  {
+    input: ['./src/server/mod.js'],
+    output: {
+      dir: './dist/server',
+      format,
+    },
+    external,
+    plugins,
+  },
+  {
+    input: ['./src/vite/mod.js', './src/vite/cli.js'],
+    output: {
+      dir: './dist/vite',
+      format,
+    },
+    external: [...external, '../globals/mod.js'],
+    plugins,
+  },
+])

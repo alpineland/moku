@@ -18,7 +18,8 @@
     "pika": "./src/vite/cli.js"
   },
   "exports": {
-    ".": "./src/runtime/mod.js",
+    ".": "./src/universal/mod.js",
+    "./server": "./src/server/mod.js",
     "./vite": "./src/vite/mod.js",
     "./globals": "./src/globals/mod.js"
   },
@@ -47,7 +48,8 @@
       "pika": "./vite/cli.js"
     },
     "exports": {
-      ".": "./runtime/mod.js",
+      ".": "./universal/mod.js",
+      "./server": "./server/mod.js",
       "./vite": "./vite/mod.js",
       "./globals": "./globals/mod.js"
     }
