@@ -1,4 +1,4 @@
-import { fetch, Request, Response, Headers } from 'undici'
+import fetch, { Request, Response, Headers } from 'node-fetch'
 
 export function installGlobals() {
   Object.defineProperties(globalThis, {
