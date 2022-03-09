@@ -13,6 +13,7 @@
     "@ydcjeff/prettier-config": "0.2.1",
     "@ydcjeff/tsconfig": "0.2.1",
     "eslint": "8.10.0",
+    "pika": "workspace:*",
     "prettier": "2.5.1",
     "prompts": "2.4.2",
     "rollup": "2.68.0",

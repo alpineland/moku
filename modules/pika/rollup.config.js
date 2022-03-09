@@ -72,15 +72,6 @@ const plugins = [
 
 export default defineConfig([
   {
-    input: ['./src/universal/mod.js'],
-    output: {
-      dir: './dist/universal',
-      format,
-    },
-    external,
-    plugins,
-  },
-  {
     input: ['./src/globals/mod.js'],
     output: {
       dir: './dist/globals',
@@ -99,12 +90,21 @@ export default defineConfig([
     plugins,
   },
   {
-    input: ['./src/vite/mod.js', './src/vite/cli.js'],
+    input: ['./src/vite_plugin/mod.js', './src/vite_plugin/cli.js'],
     output: {
-      dir: './dist/vite',
+      dir: './dist/vite_plugin',
       format,
     },
     external: [...external, '../globals/mod.js'],
+    plugins,
+  },
+  {
+    input: ['./src/vue_plugin/mod.js'],
+    output: {
+      dir: './dist/vue_plugin',
+      format,
+    },
+    external,
     plugins,
   },
 ])
