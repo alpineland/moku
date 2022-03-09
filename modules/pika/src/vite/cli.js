@@ -130,21 +130,11 @@ const buildCommand = defineCommand({
       description: 'transpile target',
       defaultV: 'modules',
     },
-    outDir: {
-      typeFn: String,
-      description: 'output directory',
-      placeholder: 'dir',
-    },
     assetsInlineLimit: {
       typeFn: Number,
       description: 'static asset base64 inline threshold in bytes',
       placeholder: 'number',
       defaultV: 4096,
-    },
-    ssr: {
-      typeFn: String,
-      description: 'build specified entry for server-side rendering',
-      placeholder: 'entry',
     },
     sourcemap: {
       typeFn: Boolean,

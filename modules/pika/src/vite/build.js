@@ -1,10 +1,8 @@
-import path from 'path'
 import { build as viteBuild } from 'vite'
 
 /** @param {import('vite').InlineConfig} config */
 export async function build(config) {
-  await buildClient(config)
-  await buildServer(config)
+  await Promise.all([buildClient(config), buildServer(config)])
 }
 
 /** @param {import('vite').InlineConfig} config */
@@ -12,7 +10,9 @@ async function buildClient(config) {
   config = {
     ...config,
     build: {
-      ssrManifest: false,
+      outDir: 'dist/client',
+      assetsDir: '_pika',
+      ssrManifest: true,
       ...config.build,
     },
   }
@@ -26,7 +26,9 @@ async function buildServer(config) {
     publicDir: false,
     build: {
       ssr: true,
+      outDir: 'dist/server',
       rollupOptions: {
+        input: 'src/entry-server',
         output: {
           format: 'esm',
         },
@@ -35,26 +37,4 @@ async function buildServer(config) {
     },
   }
   await viteBuild(config)
-}
-
-/**
- * @param {{ssrEntry: string, template: string}} options
- * @returns {import('vite').Plugin}
- */
-export function buildPlugin(options) {
-  return {
-    name: 'pika:build',
-    apply: 'build',
-    config({ build }) {
-      const ssr = !!build?.ssr
-
-      return {
-        build: {
-          assetsDir: '_pika',
-          outDir: path.join(build?.outDir || 'dist', ssr ? 'server' : 'client'),
-          ssr: ssr ? options.ssrEntry : false,
-        },
-      }
-    },
-  }
 }
