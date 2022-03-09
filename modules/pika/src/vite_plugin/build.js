@@ -2,7 +2,8 @@ import { build as viteBuild } from 'vite'
 
 /** @param {import('vite').InlineConfig} config */
 export async function build(config) {
-  await Promise.all([buildClient(config), buildServer(config)])
+  await buildClient(config)
+  await buildServer(config)
 }
 
 /** @param {import('vite').InlineConfig} config */
