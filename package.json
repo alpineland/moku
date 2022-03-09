@@ -16,7 +16,7 @@
     "pika": "workspace:*",
     "prettier": "2.5.1",
     "prompts": "2.4.2",
-    "rollup": "2.68.0",
+    "rollup": "2.70.0",
     "semver": "7.3.5",
     "uvu": "0.5.3"
   },
