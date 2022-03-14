@@ -1,11 +1,14 @@
 import { inject } from 'vue'
 
-export const PIKA_KEY = Symbol('Pika')
+const PIKA_KEY = Symbol('[pika]')
 
 export function usePika() {
   const pika = inject(PIKA_KEY)
   if (!pika) {
-    throw new Error('Failed to inject Pika')
+    throw new Error(
+      'Failed to inject Pika. ' +
+        'Make sure you have called "app.use(createPika())"',
+    )
   }
   return pika
 }
@@ -13,7 +16,7 @@ export function usePika() {
 export function createPika() {
   const pika = {
     data: {},
-    install(app) {
+    install(/** @type {import('vue').App} */ app) {
       app.provide(PIKA_KEY, this)
     },
   }
