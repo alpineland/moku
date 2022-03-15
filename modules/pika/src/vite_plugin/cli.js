@@ -205,25 +205,10 @@ const previewCommand = defineCommand({
   },
 })
 
-const routeCommand = defineCommand({
-  name: 'route',
-  usage: '$ pika route [root]',
-  description: 'Generate the route file',
-  args: { root: { nargs: '?' } },
-  async run(args) {
-    try {
-      const { generateRoutes } = await import('./generate-routes.js')
-      await generateRoutes(args.root)
-    } catch (e) {
-      handleError(e, 'error when generating route file', 'info')
-    }
-  },
-})
-
 komando({
   name: 'pika',
   version: '__VERSION__',
-  commands: [devCommand, buildCommand, previewCommand, routeCommand],
+  commands: [devCommand, buildCommand, previewCommand],
 })
 
 /**
