@@ -9,9 +9,9 @@
   },
   "devDependencies": {
     "@types/node": "17.0.19",
-    "@ydcjeff/eslint-config": "0.2.1",
-    "@ydcjeff/prettier-config": "0.2.1",
-    "@ydcjeff/tsconfig": "0.2.1",
+    "@ydcjeff/eslint-config": "0.3.0",
+    "@ydcjeff/prettier-config": "0.3.0",
+    "@ydcjeff/tsconfig": "0.3.0",
     "eslint": "8.10.0",
     "pika": "workspace:*",
     "prettier": "2.5.1",
