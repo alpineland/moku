@@ -2,7 +2,7 @@
   "extends": "@ydcjeff/tsconfig/tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
-    "moduleResolution": "node" // 'nodenext' for TS 4.6
+    "moduleResolution": "nodenext"
   },
   "include": ["**/src"]
 }
