@@ -57,7 +57,6 @@ export function mkdirp(dir) {
 export function getEntry(config, entry, exts = ['.js', '.ts']) {
   const { root } = config
   const absEntry = path.join(root, entry)
-
   const ext = exts.find((ext) => fs.existsSync(absEntry + ext))
 
   if (!ext) {
@@ -65,4 +64,56 @@ export function getEntry(config, entry, exts = ['.js', '.ts']) {
   }
 
   return absEntry + ext
+}
+
+/**
+ * @param {string} str
+ * @param {string} prefix
+ */
+export function withPrefix(str, prefix) {
+  return str.startsWith(prefix) ? str : prefix + str
+}
+
+/**
+ * @param {string} str
+ * @param {string} prefix
+ */
+export function withoutPrefix(str, prefix) {
+  return str.startsWith(prefix) ? str.replace(prefix, '') : str
+}
+
+/**
+ * @param {string} str
+ * @param {string} suffix
+ */
+export function withSuffix(str, suffix) {
+  return str.endsWith(suffix) ? str : str + suffix
+}
+
+/**
+ * @param {string} str
+ * @param {string} suffix
+ */
+export function withoutSuffix(str, suffix) {
+  return str.endsWith(suffix) ? str.replace(suffix, '') : str
+}
+
+/** @param {string} str */
+export function withLeadingSlash(str) {
+  return withPrefix(str, '/')
+}
+
+/** @param {string} str */
+export function withoutLeadingSlash(str) {
+  return withoutPrefix(str, '/')
+}
+
+/** @param {string} str */
+export function withTrailingSlash(str) {
+  return withSuffix(str, '/')
+}
+
+/** @param {string} str */
+export function withoutTrailingSlash(str) {
+  return withoutSuffix(str, '/')
 }
