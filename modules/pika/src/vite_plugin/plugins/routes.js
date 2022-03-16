@@ -63,7 +63,8 @@ async function generateRoutes(root, exclude) {
         __endpoint: (endpoint = ${s(raw)}) => import(/* @vite-ignore */ ${s(
       routeDir,
     )} + endpoint)
-      }
+      },
+      props: true,
     }`)
   }
 
