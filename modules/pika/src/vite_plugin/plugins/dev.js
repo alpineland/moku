@@ -1,6 +1,6 @@
 import { installGlobals } from '../../globals/mod.js'
 import { getRequest, setResponse } from '../../node/mod.js'
-import { respond } from "../../server/mod.js";
+import { respond } from '../../server/mod.js'
 import { get_entry, read_template } from '../utils.js'
 
 /**
@@ -58,8 +58,8 @@ export function devHandler(server) {
       }
 
       const entryServer = get_entry(server.config, 'src/entry.server')
-      const render = (await server.ssrLoadModule(entryServer)).default
-      const { htmlAttrs, headTags, body, bodyAttrs } = await render(url)
+      const { start } = await server.ssrLoadModule(entryServer)
+      const { htmlAttrs, headTags, body, bodyAttrs } = await start({ request })
       const entry = get_entry(server.config, 'src/entry.client')
       const script = `
   <script type="module" data-pika-59827764>
@@ -73,6 +73,9 @@ export function devHandler(server) {
         .replace('<!-- vue.head -->', headTags)
         .replace('<!-- vue.body -->', body + script)
 
+      res.statusCode = 200
+      res.setHeader('Content-Type', 'text/html')
+      res.end(html)
     } catch (/** @type {any} */ e) {
       server.ssrFixStacktrace(e)
       console.error(e) // TODO: move to server part
