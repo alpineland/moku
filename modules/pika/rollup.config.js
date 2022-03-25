@@ -81,12 +81,23 @@ export default defineConfig([
     plugins,
   },
   {
+    input: ['./src/node/mod.js'],
+    output: {
+      dir: './dist/node',
+      format,
+    },
+    external: (id) =>
+      external.includes(id) || /globals|vite_plugin|vue_plugin/g.test(id),
+    plugins,
+  },
+  {
     input: ['./src/server/mod.js'],
     output: {
       dir: './dist/server',
       format,
     },
-    external,
+    external: (id) =>
+      external.includes(id) || /globals|vite_plugin|vue_plugin/g.test(id),
     plugins,
   },
   {
@@ -95,7 +106,8 @@ export default defineConfig([
       dir: './dist/vite_plugin',
       format,
     },
-    external: [...external, '../globals/mod.js'],
+    external: (id) =>
+      external.includes(id) || /globals|server|vue_plugin/g.test(id),
     plugins,
   },
   {
@@ -104,7 +116,8 @@ export default defineConfig([
       dir: './dist/vue_plugin',
       format,
     },
-    external,
+    external: (id) =>
+      external.includes(id) || /globals|server|vite_plugin/g.test(id),
     plugins,
   },
 ])

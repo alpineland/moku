@@ -1,0 +1,7 @@
+export const ASSETS_DIR = '_pika'
+export const CLIENT_OUT_DIR = 'dist/client'
+export const SERVER_OUT_DIR = 'dist/server'
+export const TARGET = 'es2020'
+export const GENERATED_CODE = 'es2015'
+export const CLIENT_MANIFEST = 'pika-client-manifest.json'
+export const SERVER_MANIFEST = 'pika-server-manifest.json'

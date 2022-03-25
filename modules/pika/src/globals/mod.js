@@ -1,4 +1,5 @@
 import fetch, { Request, Response, Headers } from 'node-fetch'
+import { URLPattern } from 'urlpattern-polyfill'
 
 export function installGlobals() {
   Object.defineProperties(globalThis, {
@@ -21,6 +22,12 @@ export function installGlobals() {
       enumerable: true,
       configurable: true,
       value: Headers,
+    },
+    // Making `URLPattern` global here as Deno supports OOTB
+    URLPattern: {
+      enumerable: true,
+      configurable: true,
+      value: URLPattern,
     },
   })
 }

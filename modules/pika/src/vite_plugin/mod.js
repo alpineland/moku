@@ -1,10 +1,6 @@
-import { devPlugin } from './dev.js'
+import { dev } from './plugins/dev.js'
+import { routes } from './plugins/routes.js'
 
-export function pika({
-  routeDir = './src/routes',
-  ssrEntry = './src/entry-server',
-  template = 'index.html',
-  trailingSlash = false,
-} = {}) {
-  return devPlugin({ ssrEntry, template })
+export function pika() {
+  return [dev(), routes()]
 }

@@ -152,7 +152,7 @@ const buildCommand = defineCommand({
   },
   async run(args, flags) {
     try {
-      const { build } = await import('./build.js')
+      const { build } = await import('./build/mod.js')
       await build({
         root: args.root,
         base: flags.base,

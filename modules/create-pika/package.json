@@ -1,0 +1,19 @@
+{
+  "name": "create-pika",
+  "version": "0.0.0",
+  "type": "module",
+  "bin": "mod.js",
+  "author": "Jeff Yang",
+  "license": "MIT",
+  "files": [
+    "mod.js",
+    "js",
+    "ts"
+  ],
+  "engines": {
+    "node": ">=14.18"
+  },
+  "dependencies": {
+    "prompts": "2.4.2"
+  }
+}

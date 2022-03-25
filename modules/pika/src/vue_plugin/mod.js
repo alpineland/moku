@@ -1,4 +1,4 @@
 export const VERSION = '__VERSION__'
-export { ClientOnly } from './components.js'
-export { createPika, usePika } from './pika.js'
+export { ClientOnly, Root } from './components.js'
 export { useEndpointData } from './composables.js'
+export { createPika, usePika } from './pika.js'

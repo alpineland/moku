@@ -5,7 +5,7 @@ import path from 'path'
  * @param {string} root
  * @param {string} template
  */
-export function readTemplate(root, template) {
+export function read_template(root, template) {
   template = path.relative(root, template)
 
   if (fs.existsSync(template)) {
@@ -54,7 +54,7 @@ export function mkdirp(dir) {
  * @param {string[]} exts `['.js', '.ts']`
  * @returns {string} absolute entry
  */
-export function getEntry(config, entry, exts = ['.js', '.ts']) {
+export function get_entry(config, entry, exts = ['.js', '.ts']) {
   const { root } = config
   const absEntry = path.join(root, entry)
   const ext = exts.find((ext) => fs.existsSync(absEntry + ext))
@@ -70,7 +70,7 @@ export function getEntry(config, entry, exts = ['.js', '.ts']) {
  * @param {string} str
  * @param {string} prefix
  */
-export function withPrefix(str, prefix) {
+export function with_prefix(str, prefix) {
   return str.startsWith(prefix) ? str : prefix + str
 }
 
@@ -78,7 +78,7 @@ export function withPrefix(str, prefix) {
  * @param {string} str
  * @param {string} prefix
  */
-export function withoutPrefix(str, prefix) {
+export function without_prefix(str, prefix) {
   return str.startsWith(prefix) ? str.replace(prefix, '') : str
 }
 
@@ -86,7 +86,7 @@ export function withoutPrefix(str, prefix) {
  * @param {string} str
  * @param {string} suffix
  */
-export function withSuffix(str, suffix) {
+export function with_suffix(str, suffix) {
   return str.endsWith(suffix) ? str : str + suffix
 }
 
@@ -94,26 +94,26 @@ export function withSuffix(str, suffix) {
  * @param {string} str
  * @param {string} suffix
  */
-export function withoutSuffix(str, suffix) {
+export function without_suffix(str, suffix) {
   return str.endsWith(suffix) ? str.replace(suffix, '') : str
 }
 
 /** @param {string} str */
-export function withLeadingSlash(str) {
-  return withPrefix(str, '/')
+export function with_leading_slash(str) {
+  return with_prefix(str, '/')
 }
 
 /** @param {string} str */
-export function withoutLeadingSlash(str) {
-  return withoutPrefix(str, '/')
+export function without_leading_slash(str) {
+  return without_prefix(str, '/')
 }
 
 /** @param {string} str */
-export function withTrailingSlash(str) {
-  return withSuffix(str, '/')
+export function with_trailing_slash(str) {
+  return with_suffix(str, '/')
 }
 
 /** @param {string} str */
-export function withoutTrailingSlash(str) {
-  return withoutSuffix(str, '/')
+export function without_trailing_slash(str) {
+  return without_suffix(str, '/')
 }

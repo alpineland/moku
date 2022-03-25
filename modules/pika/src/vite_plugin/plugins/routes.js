@@ -1,13 +1,11 @@
+import fs from 'fs'
 import path from 'path'
 import {
   walk,
-  withLeadingSlash,
-  withoutLeadingSlash,
-  withoutTrailingSlash,
+  with_leading_slash,
+  without_leading_slash,
+  without_trailing_slash,
 } from '../utils.js'
-
-const virtualId = 'virtual:pika/routes'
-const virtualResolvedId = `\0${virtualId}`
 
 /**
  * @param {{
@@ -16,7 +14,7 @@ const virtualResolvedId = `\0${virtualId}`
  * }} options
  * @returns {import('vite').Plugin}
  */
-export function routePlugin({ exclude = /\.[jt]s$/, routeFn = () => {} } = {}) {
+export function routes({ exclude = /\.[jt]s$/, routeFn = () => {} } = {}) {
   /** @type {string} */
   let root
 
@@ -25,14 +23,15 @@ export function routePlugin({ exclude = /\.[jt]s$/, routeFn = () => {} } = {}) {
     configResolved(config) {
       root = config.root
     },
-    resolveId(id) {
-      if (id === virtualId) return virtualResolvedId
-    },
-    async load(id) {
-      if (id === virtualResolvedId) {
-        const routes = await generateRoutes(root, exclude)
-        return `export const routes = [${routes}];`
+    configureServer(server) {
+      const file_to_write = path.join(root, 'src', 'pika.gen.js')
+      const update = async () => {
+        const routes = await generate_routes(root, exclude)
+        fs.writeFileSync(file_to_write, `export const routes = [${routes}]`)
       }
+      if (!fs.existsSync(file_to_write)) update()
+      server.watcher.on('add', update)
+      server.watcher.on('unlink', update)
     },
   }
 }
@@ -41,8 +40,9 @@ export function routePlugin({ exclude = /\.[jt]s$/, routeFn = () => {} } = {}) {
  * @param {string} root
  * @param {RegExp} exclude
  */
-async function generateRoutes(root, exclude) {
-  const routeDir = path.resolve(root, 'src/routes')
+async function generate_routes(root, exclude) {
+  const src = path.resolve(root, 'src')
+  const routeDir = path.resolve(src, 'routes')
   const files = []
 
   for await (const file of walk(routeDir, exclude)) {
@@ -57,10 +57,10 @@ async function generateRoutes(root, exclude) {
 
     routes.push(`{
       path: ${s(toRoutePath(file, routeDir))},
-      component: () => import(${s(file)}),
+      component: () => import(${s('./' + path.relative(src, file))}),
       name: ${s(toRouteName(file, routeDir))},
       meta: {
-        __endpoint: (endpoint = ${s(raw)}) => import(/* @vite-ignore */ ${s(
+        endpoint: (endpoint = ${s(raw)}) => import(/* @vite-ignore */ ${s(
       routeDir,
     )} + endpoint)
       },
@@ -93,15 +93,15 @@ export function toRoutePath(file, routeDir) {
     pathname = pathname.replace(/index$/, '')
   }
 
-  return withLeadingSlash(withoutTrailingSlash(pathname))
+  return with_leading_slash(without_trailing_slash(pathname))
 }
 
 /**
- * @param {string} file 
- * @param {string} routeDir 
+ * @param {string} file
+ * @param {string} routeDir
  */
 function toRouteName(file, routeDir) {
   const raw = path.relative(routeDir, file).replace(/\.vue$/, '')
 
-  return withoutLeadingSlash(withoutTrailingSlash(raw))
+  return without_leading_slash(without_trailing_slash(raw))
 }
