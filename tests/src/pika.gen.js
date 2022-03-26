@@ -27,6 +27,5 @@ export const routes = [
 export const endpoints = [
   {
     path: '/:user/:repo',
-    component: () => import('./routes/$user/$repo.js'),
   },
 ]

@@ -25,6 +25,7 @@
     "./globals": "./src/globals/mod.js"
   },
   "dependencies": {
+    "knitwork": "0.1.1",
     "komando": "^1.0.2",
     "node-fetch": "^3.2.3",
     "picocolors": "^1.0.0",
