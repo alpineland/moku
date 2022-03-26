@@ -1,4 +1,4 @@
-import { routes } from './pika.gen.js'
+import { views } from './pika.gen.js'
 import { createHead } from '@vueuse/head'
 import { Root, createPika } from 'pika'
 import { createSSRApp } from 'vue'
@@ -13,7 +13,7 @@ export function createApp() {
     history: import.meta.env.SSR
       ? createMemoryHistory(base)
       : createWebHistory(base),
-    routes,
+    routes: views,
   })
 
   app.use(router)
