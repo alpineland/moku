@@ -1,8 +1,8 @@
-import * as assert from 'uvu/assert'
-import { toRoutePath } from './routes.js'
-import { suite } from 'uvu'
+import * as assert from 'uvu/assert';
+import { toRoutePath } from './routes.js';
+import { suite } from 'uvu';
 
-const routePath = suite('toRoutePath')
+const routePath = suite('toRoutePath');
 const routePathFixtures = [
   ['index.vue', '/'],
   ['$id.vue', '/:id'],
@@ -19,16 +19,16 @@ const routePathFixtures = [
   ['$dynamic/nested/$.vue', '/:dynamic/nested/:*'],
   ['static/user.vue', '/static/user'],
   ['static/index.vue', '/static'],
-]
+];
 
 for (const [raw, expected] of routePathFixtures) {
   routePath(`${raw} -> ${expected}`, () => {
-    assert.equal(toRoutePath(raw, '.'), expected)
-  })
+    assert.equal(toRoutePath(raw, '.'), expected);
+  });
 }
 
 routePath('Invalid route', () => {
-  assert.throws(() => toRoutePath('$$id.vue', '.'), 'Invalid route file')
-})
+  assert.throws(() => toRoutePath('$$id.vue', '.'), 'Invalid route file');
+});
 
-routePath.run()
+routePath.run();

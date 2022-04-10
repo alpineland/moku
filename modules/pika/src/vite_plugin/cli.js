@@ -1,22 +1,22 @@
-import { performance } from 'perf_hooks'
+import { performance } from 'perf_hooks';
 // @ts-expect-error
-global.__vite_start_time = performance.now()
+global.__vite_start_time = performance.now();
 
 // eslint-disable-next-line @ydcjeff/isort
-import pc from 'picocolors'
-import { defineCommand, komando } from 'komando'
-import { createRequire } from 'module'
-import { createLogger } from 'vite'
+import pc from 'picocolors';
+import { defineCommand, komando } from 'komando';
+import { createRequire } from 'module';
+import { createLogger } from 'vite';
 
 /** @param {string[]} choices */
 function oneOf(choices) {
   /** @param {import('vite').LogLevel} str */
   return (str) => {
     if (choices.includes(str)) {
-      return str
+      return str;
     }
-    throw new Error(`invalid choice, choose from ${choices.join(' | ')}`)
-  }
+    throw new Error(`invalid choice, choose from ${choices.join(' | ')}`);
+  };
 }
 
 const globalFlags = {
@@ -42,7 +42,7 @@ const globalFlags = {
     description: 'set env mode',
     short: 'm',
   },
-}
+};
 
 const devCommand = defineCommand({
   name: 'dev',
@@ -78,7 +78,7 @@ const devCommand = defineCommand({
   },
   async run(args, flags) {
     try {
-      const { createServer } = await import('vite')
+      const { createServer } = await import('vite');
       const server = await createServer({
         root: args.root,
         base: flags.base,
@@ -86,17 +86,17 @@ const devCommand = defineCommand({
         configFile: flags.config,
         logLevel: flags.logLevel,
         server: cleanFlags(flags),
-      })
+      });
 
       if (!server.httpServer) {
-        throw new Error('HTTP server not available')
+        throw new Error('HTTP server not available');
       }
 
-      await server.listen()
-      const info = server.config.logger.info
+      await server.listen();
+      const info = server.config.logger.info;
 
-      const require = createRequire(import.meta.url)
-      const { version } = require('vite/package.json')
+      const require = createRequire(import.meta.url);
+      const { version } = require('vite/package.json');
 
       info(
         pc.cyan(`\n  vite v${version}`) +
@@ -104,20 +104,20 @@ const devCommand = defineCommand({
           pc.yellow('pika v__VERSION__') +
           pc.green(` dev server running at:\n`),
         { clear: !server.config.logger.hasWarned },
-      )
-      server.printUrls()
+      );
+      server.printUrls();
 
       // @ts-expect-error
       if (global.__vite_start_time) {
         // @ts-expect-error
-        const startupDuration = performance.now() - global.__vite_start_time
-        info(`\n  ${pc.cyan(`ready in ${Math.ceil(startupDuration)}ms.`)}\n`)
+        const startupDuration = performance.now() - global.__vite_start_time;
+        info(`\n  ${pc.cyan(`ready in ${Math.ceil(startupDuration)}ms.`)}\n`);
       }
     } catch (e) {
-      handleError(e, 'error when starting dev server', flags.logLevel)
+      handleError(e, 'error when starting dev server', flags.logLevel);
     }
   },
-})
+});
 
 const buildCommand = defineCommand({
   name: 'build',
@@ -152,7 +152,7 @@ const buildCommand = defineCommand({
   },
   async run(args, flags) {
     try {
-      const { build } = await import('./build/mod.js')
+      const { build } = await import('vite');
       await build({
         root: args.root,
         base: flags.base,
@@ -160,12 +160,20 @@ const buildCommand = defineCommand({
         configFile: flags.config,
         logLevel: flags.logLevel,
         build: cleanFlags(flags),
-      })
+      });
+      await build({
+        root: args.root,
+        base: flags.base,
+        mode: flags.mode,
+        configFile: flags.config,
+        logLevel: flags.logLevel,
+        build: { ...cleanFlags(flags), ssr: true },
+      });
     } catch (e) {
-      handleError(e, 'error during build', flags.logLevel)
+      handleError(e, 'error during build', flags.logLevel);
     }
   },
-})
+});
 
 const previewCommand = defineCommand({
   name: 'preview',
@@ -193,23 +201,23 @@ const previewCommand = defineCommand({
   },
   async run(args, flags) {
     try {
-      const { preview } = await import('./preview.js')
+      const { preview } = await import('./preview.js');
       await preview({
         root: args.root,
         host: flags.host,
         port: flags.port,
-      })
+      });
     } catch (e) {
-      handleError(e, 'error when starting preview server', flags.logLevel)
+      handleError(e, 'error when starting preview server', flags.logLevel);
     }
   },
-})
+});
 
 komando({
   name: 'pika',
   version: '__VERSION__',
   commands: [devCommand, buildCommand, previewCommand],
-})
+});
 
 /**
  *
@@ -223,16 +231,16 @@ function handleError(e, msg, logLevel) {
     pc.red(`${msg}:\n${e.stack}`),
     // @ts-expect-error unknown is not assignable to Error.
     { error: e },
-  )
-  process.exit(1)
+  );
+  process.exit(1);
 }
 
 /** @param {any} flags */
 function cleanFlags(flags) {
-  const res = { ...flags }
-  delete res.base
-  delete res.config
-  delete res.logLevel
-  delete res.mode
-  return res
+  const res = { ...flags };
+  delete res.base;
+  delete res.config;
+  delete res.logLevel;
+  delete res.mode;
+  return res;
 }

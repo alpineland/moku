@@ -1,28 +1,28 @@
-import pkg from './package.json'
-import fs from 'fs'
-import path from 'path'
-import { builtinModules } from 'module'
-import { defineConfig } from 'rollup'
+import pkg from './package.json';
+import fs from 'fs';
+import path from 'path';
+import { builtinModules } from 'module';
+import { defineConfig } from 'rollup';
 
-fs.rmSync('./dist', { recursive: true, force: true })
+fs.rmSync('./dist', { recursive: true, force: true });
 
-const format = 'esm'
+const format = 'esm';
 const external = [
   ...Object.keys(pkg.peerDependencies),
   ...Object.keys(pkg.dependencies),
   ...builtinModules,
-]
+];
 
 /** @returns {import('rollup').Plugin} */
 function injectModulePath() {
-  const cwd = process.cwd()
+  const cwd = process.cwd();
   return {
     transform(code, id) {
       if (!id.includes('?')) {
-        return '// ' + path.relative(cwd, id) + '\n' + code
+        return '// ' + path.relative(cwd, id) + '\n' + code;
       }
     },
-  }
+  };
 }
 
 /** @returns {import('rollup').Plugin} */
@@ -42,18 +42,18 @@ function pkgJSON() {
     'dependencies',
     'peerDependencies',
     'publishConfig',
-  ]
+  ];
   const filtered = Object.fromEntries(
     Object.entries(pkg).filter(([k]) => {
-      if (k === 'publishConfig') delete pkg[k].directory
-      return fields.includes(k)
+      if (k === 'publishConfig') delete pkg[k].directory;
+      return fields.includes(k);
     }),
-  )
+  );
   return {
     writeBundle() {
-      fs.writeFileSync('./dist/package.json', JSON.stringify(filtered))
+      fs.writeFileSync('./dist/package.json', JSON.stringify(filtered));
     },
-  }
+  };
 }
 
 const plugins = [
@@ -65,10 +65,10 @@ const plugins = [
       fs.writeFileSync(
         path.join(opts.dir, 'index.d.ts'),
         `export * from './mod';`,
-      )
+      );
     },
   },
-]
+];
 
 export default defineConfig([
   {
@@ -120,4 +120,4 @@ export default defineConfig([
       external.includes(id) || /globals|server|vite_plugin/g.test(id),
     plugins,
   },
-])
+]);

@@ -2,8 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "pika": ["./types/pika"],
-      "types": ["./types/internal"]
+      "~/types/*": ["./types/*"]
     }
   }
 }

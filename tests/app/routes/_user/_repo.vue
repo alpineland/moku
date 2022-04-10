@@ -1,19 +1,19 @@
 <script setup>
-import { useHead } from '@vueuse/head'
-import { useEndpointData } from 'pika'
-import { useRoute, RouterLink } from 'vue-router'
+import { useHead } from '@vueuse/head';
+import { useData } from 'pika';
+import { useRoute, RouterLink } from 'vue-router';
 
-const data = useEndpointData()
-const route = useRoute()
+const data = useData();
+const route = useRoute();
 
 useHead({
-  title: route.params.repo,
-})
+  title: route.params.repo + ' $repo',
+});
 
 defineProps({
   repo: String,
   user: String,
-})
+});
 </script>
 
 <template>

@@ -1,14 +1,14 @@
 <script setup>
-import { useHead } from '@vueuse/head'
-import { RouterLink } from 'vue-router'
+import { useHead } from '@vueuse/head';
+import { RouterLink } from 'vue-router';
 
 useHead({
   title: 'user index',
-})
+});
 
 defineProps({
   user: String,
-})
+});
 </script>
 
 <template>

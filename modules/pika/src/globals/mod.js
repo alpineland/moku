@@ -1,5 +1,5 @@
-import fetch, { Request, Response, Headers } from 'node-fetch'
-import { URLPattern } from 'urlpattern-polyfill'
+import fetch, { Request, Response, Headers } from 'node-fetch';
+import { URLPattern } from 'urlpattern-polyfill';
 
 export function installGlobals() {
   Object.defineProperties(globalThis, {
@@ -29,5 +29,5 @@ export function installGlobals() {
       configurable: true,
       value: URLPattern,
     },
-  })
+  });
 }
