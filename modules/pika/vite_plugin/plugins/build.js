@@ -1,7 +1,7 @@
 import path from 'path';
 
 /**
- * @param {Required<import('~/types/mod').PluginSettings>} settings
+ * @param {Required<import('pika').PluginSettings>} settings
  * @returns {import('vite').Plugin}
  */
 export function plugin_build(settings) {

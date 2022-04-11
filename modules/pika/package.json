@@ -3,7 +3,7 @@
   "description": "Vue Apps in a flash with web fundamentals",
   "version": "0.1.0",
   "type": "module",
-  "types": "./vue_plugin/index.d.ts",
+  "types": "./types/pika.d.ts",
   "author": "Jeff Yang",
   "license": "MIT",
   "keywords": [
@@ -21,9 +21,16 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./vue_plugin/index.d.ts",
-        "default": "./vue_plugin/mod.js"
+        "types": "./types/pika.d.ts"
       }
+    },
+    "./globals": {
+      "types": "./globals/index.d.ts",
+      "default": "./globals/mod.js"
+    },
+    "./node": {
+      "types": "./node/index.d.ts",
+      "default": "./node/mod.js"
     },
     "./server": {
       "import": {
@@ -37,13 +44,11 @@
         "default": "./vite_plugin/mod.js"
       }
     },
-    "./globals": {
-      "types": "./globals/index.d.ts",
-      "default": "./globals/mod.js"
-    },
-    "./node": {
-      "types": "./node/index.d.ts",
-      "default": "./node/mod.js"
+    "./vue_plugin": {
+      "import": {
+        "types": "./vue_plugin/index.d.ts",
+        "default": "./vue_plugin/mod.js"
+      }
     }
   },
   "dependencies": {

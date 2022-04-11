@@ -6,6 +6,23 @@ import { defineConfig } from 'rollup';
 
 fs.rmSync('./dist', { recursive: true, force: true });
 
+async function copy(src, dest) {
+  const stat = fs.statSync(src);
+  if (stat.isDirectory()) {
+    await copyDir(src, dest);
+  } else {
+    fs.copyFileSync(src, dest);
+  }
+}
+
+async function copyDir(src, dest) {
+  fs.mkdirSync(dest, { recursive: true });
+  const files = await fs.promises.opendir(src);
+  for await (const file of files) {
+    copy(path.resolve(src, file.name), path.resolve(dest, file.name));
+  }
+}
+
 const format = 'es';
 const external = [
   ...Object.keys(pkg.peerDependencies),
@@ -63,6 +80,7 @@ const plugins = [
         path.join(opts.dir, 'index.d.ts'),
         `export * from './mod';`,
       );
+      copy('./types', './dist/types');
     },
   },
 ];

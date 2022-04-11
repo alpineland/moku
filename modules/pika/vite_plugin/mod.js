@@ -3,7 +3,7 @@ import { plugin_dev } from './plugins/dev.js';
 import { plugin_manifest } from './plugins/manifest.js';
 
 /**
- * @param {import('~/types/mod').PluginSettings} settings
+ * @param {import('pika').PluginSettings} settings
  * @returns {import('vite').Plugin[]}
  */
 export function pika(settings) {
@@ -14,7 +14,7 @@ export function pika(settings) {
   return [
     plugin_dev(settings),
     plugin_build(
-      /** @type {Required<import('~/types/mod').PluginSettings>} */ (settings),
+      /** @type {Required<import('pika').PluginSettings>} */ (settings),
     ),
     plugin_manifest(),
   ];

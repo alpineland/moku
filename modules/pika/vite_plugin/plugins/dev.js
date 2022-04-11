@@ -3,7 +3,7 @@ import { getRequest, setResponse } from '../../node/mod.js';
 import { get_entry, read_template } from '../utils.js';
 
 /**
- * @param {import('~/types/mod').PluginSettings} settings
+ * @param {import('pika').PluginSettings} settings
  * @returns {import('vite').Plugin}
  */
 export function plugin_dev(settings) {
@@ -27,7 +27,7 @@ export function plugin_dev(settings) {
 
 /**
  * @param {import('vite').ViteDevServer} vds
- * @param {import('~/types/mod').PluginSettings} settings
+ * @param {import('pika').PluginSettings} settings
  */
 function ssr_middleware(vds, settings) {
   /** @type {import('vite').Connect.SimpleHandleFunction} */
@@ -49,7 +49,7 @@ function ssr_middleware(vds, settings) {
         get_entry(config, `${settings.appDir}/entry.server`),
       );
 
-      /** @type {import('~/types/mod').SSRContext} */
+      /** @type {import('pika').SSRContext} */
       const ssrContext = {
         request,
         url: req.url,

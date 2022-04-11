@@ -1,7 +1,7 @@
 import { etag, normalize_route } from './utils.js';
 
 export class Server {
-  /** @param {import('~/types/mod').ServerSettings} settings */
+  /** @param {import('pika').ServerSettings} settings */
   constructor(settings) {
     this.endpoints = settings.endpoints;
     this.trailing_slash = settings.trailingSlash;
@@ -10,8 +10,8 @@ export class Server {
   /**
    * @param {{
    *    request: Request
-   *    view: import('~/types/mod').ViewFn
-   *    endpoint: import('~/types/mod').EndpointFn
+   *    view: import('pika').ViewFn
+   *    endpoint: import('pika').EndpointFn
    * }} args
    * @returns {Promise<Response>}
    */
@@ -31,7 +31,7 @@ export class Server {
 
     /** @type {Response} */
     let resp;
-    /** @type {{ [method: string]: import('~/types/mod').RequestHandler } | undefined} */
+    /** @type {{ [method: string]: import('pika').RequestHandler } | undefined} */
     let mod;
     /** @type {URLPatternComponentResult['groups'] | undefined} */
     let params;
@@ -62,7 +62,7 @@ export class Server {
 
   /**
    * @param {Request} request
-   * @param {{ [method: string]: import('~/types/mod').RequestHandler }} mod
+   * @param {{ [method: string]: import('pika').RequestHandler }} mod
    * @param {URLPatternComponentResult['groups']} params
    * @returns {Promise<Response>}
    */
@@ -103,7 +103,7 @@ export class Server {
  *    appHtml: string,
  *    bodyAttrs: string,
  *    pika: { data: Record<any, any> },
- *    ssrContext: import('~/types/mod').SSRContext
+ *    ssrContext: import('pika').SSRContext
  * }} args
  */
 export async function renderDocumentToString({

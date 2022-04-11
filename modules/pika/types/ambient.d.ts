@@ -1,3 +1,3 @@
 declare module '$pika/manifest' {
-  export const manifest: import('./mod').SSRManifest;
+  export const manifest: import('./pika').SSRManifest;
 }

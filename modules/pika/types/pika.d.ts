@@ -1,5 +1,7 @@
 /// <reference types="vite/client" />
 
+import './ambient';
+
 /**
  * A function exported from an endpoint which can be either `get` or
  * `post` and handle requests with that method.
@@ -96,5 +98,5 @@ export interface EndpointFn {
 export interface Endpoint {
   pathname: string;
   search: string;
-  load: () => Promise;
+  load: () => Promise<void>;
 }

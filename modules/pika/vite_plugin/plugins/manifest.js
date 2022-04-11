@@ -1,6 +1,6 @@
 /** @returns {import('vite').Plugin} */
 export function plugin_manifest() {
-  /** @type {import('~/types/mod').SSRManifest} */
+  /** @type {import('pika').SSRManifest} */
   const manifest = {
     entryClient: '',
     html: '',
