@@ -42,7 +42,8 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "test": "echo"
+    "test": "pnpm run test_unit",
+    "test_unit": "uvu src _test.js"
   },
   "publishConfig": {
     "directory": "dist",

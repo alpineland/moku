@@ -53,9 +53,12 @@ async function generate_routes(root, settings) {
       .replace(/\.(?:vue|js|ts)$/, '');
 
     if (file.endsWith('.js') || file.endsWith('.ts')) {
+      const view_file = file.replace(/\.[jt]s$/, '.vue');
+      const search = files.includes(view_file) ? s('_data=raw') : null;
       endpoints.push({
         pathname: s(to_route_path(filename)),
         load: genDynamicImport(relative_file),
+        ...(search ? { search } : {}),
       });
     } else if (file.endsWith('.vue')) {
       const shadow_endpoint_file_js = file.replace(/\.vue$/, '.js');

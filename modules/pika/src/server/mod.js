@@ -37,8 +37,8 @@ export class Server {
     let params;
 
     try {
-      for (const { pathname, load } of this.endpoints) {
-        const result = new URLPattern({ pathname, search: '_data=raw' }).exec(request.url);
+      for (const { pathname, load, search } of this.endpoints) {
+        const result = new URLPattern({ pathname, search }).exec(request.url);
         if (result !== null) {
           params = result.pathname.groups;
           mod = await load();

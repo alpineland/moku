@@ -3,33 +3,40 @@
 
 export const views = [
   {
-    path: "/:user/:repo",
-    component: () => import("./routes/_user/_repo.vue"),
+    path: '/:user/:repo',
+    component: () => import('./routes/_user/_repo.vue'),
     props: true,
     meta: {
-      shadow: import.meta.env.SSR ? () => import("./routes/_user/_repo.js") : null
-    }
+      shadow: import.meta.env.SSR
+        ? () => import('./routes/_user/_repo.js')
+        : null,
+    },
   },
   {
-    path: "/:user",
-    component: () => import("./routes/_user/index.vue"),
-    props: true
+    path: '/:user',
+    component: () => import('./routes/_user/index.vue'),
+    props: true,
   },
   {
-    path: "/about",
-    component: () => import("./routes/about.vue"),
-    props: true
+    path: '/about',
+    component: () => import('./routes/about.vue'),
+    props: true,
   },
   {
-    path: "/",
-    component: () => import("./routes/index.vue"),
-    props: true
-  }
+    path: '/',
+    component: () => import('./routes/index.vue'),
+    props: true,
+  },
 ];
 
 export const endpoints = [
   {
-    pathname: "/:user/:repo",
-    load: () => import("./routes/_user/_repo.js")
-  }
+    pathname: '/:user/:org',
+    load: () => import('./routes/_user/_org.js'),
+  },
+  {
+    pathname: '/:user/:repo',
+    load: () => import('./routes/_user/_repo.js'),
+    search: '_data=raw',
+  },
 ];

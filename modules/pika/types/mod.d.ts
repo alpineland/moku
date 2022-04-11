@@ -95,5 +95,6 @@ export interface EndpointFn {
 
 export interface Endpoint {
   pathname: string;
+  search: string;
   load: () => Promise;
 }

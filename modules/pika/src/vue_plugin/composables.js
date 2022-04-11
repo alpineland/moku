@@ -5,7 +5,7 @@ import { useRoute, useRouter } from 'vue-router';
 export async function useData({ server, client } = {}) {
   const pika = usePika();
   const route = useRoute();
-  const router = useRouter()
+  const router = useRouter();
 
   if (import.meta.env.SSR) {
     onServerPrefetch(async () => {
