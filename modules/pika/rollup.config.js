@@ -32,6 +32,7 @@ function pkgJSON() {
     'description',
     'version',
     'type',
+    'types',
     'bin',
     'files',
     'author',
@@ -41,13 +42,9 @@ function pkgJSON() {
     'exports',
     'dependencies',
     'peerDependencies',
-    'publishConfig',
   ];
   const filtered = Object.fromEntries(
-    Object.entries(pkg).filter(([k]) => {
-      if (k === 'publishConfig') delete pkg[k].directory;
-      return fields.includes(k);
-    }),
+    Object.entries(pkg).filter(([k]) => fields.includes(k)),
   );
   return {
     writeBundle() {
@@ -72,7 +69,7 @@ const plugins = [
 
 export default defineConfig([
   {
-    input: ['./src/globals/mod.js'],
+    input: ['./globals/mod.js'],
     output: {
       dir: './dist/globals',
       format,
@@ -81,7 +78,7 @@ export default defineConfig([
     plugins,
   },
   {
-    input: ['./src/node/mod.js'],
+    input: ['./node/mod.js'],
     output: {
       dir: './dist/node',
       format,
@@ -91,7 +88,7 @@ export default defineConfig([
     plugins,
   },
   {
-    input: ['./src/server/mod.js'],
+    input: ['./server/mod.js'],
     output: {
       dir: './dist/server',
       format,
@@ -101,7 +98,7 @@ export default defineConfig([
     plugins,
   },
   {
-    input: ['./src/vite_plugin/mod.js', './src/vite_plugin/cli.js'],
+    input: ['./vite_plugin/mod.js', './vite_plugin/cli.js'],
     output: {
       dir: './dist/vite_plugin',
       format,
@@ -111,7 +108,7 @@ export default defineConfig([
     plugins,
   },
   {
-    input: ['./src/vue_plugin/mod.js'],
+    input: ['./vue_plugin/mod.js'],
     output: {
       dir: './dist/vue_plugin',
       format,

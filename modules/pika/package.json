@@ -3,7 +3,7 @@
   "description": "Vue Apps in a flash with web fundamentals",
   "version": "0.1.0",
   "type": "module",
-  "types": "./types/mod.d.ts",
+  "types": "./vue_plugin/index.d.ts",
   "author": "Jeff Yang",
   "license": "MIT",
   "keywords": [
@@ -16,13 +16,35 @@
     "node": ">=14.18"
   },
   "bin": {
-    "pika": "./src/vite_plugin/cli.js"
+    "pika": "./vite_plugin/cli.js"
   },
   "exports": {
-    ".": "./src/vue_plugin/mod.js",
-    "./server": "./src/server/mod.js",
-    "./vite": "./src/vite_plugin/mod.js",
-    "./globals": "./src/globals/mod.js"
+    ".": {
+      "import": {
+        "types": "./vue_plugin/index.d.ts",
+        "default": "./vue_plugin/mod.js"
+      }
+    },
+    "./server": {
+      "import": {
+        "types": "./server/index.d.ts",
+        "default": "./server/mod.js"
+      }
+    },
+    "./vite": {
+      "import": {
+        "types": "./vite_plugin/index.d.ts",
+        "default": "./vite_plugin/mod.js"
+      }
+    },
+    "./globals": {
+      "types": "./globals/index.d.ts",
+      "default": "./globals/mod.js"
+    },
+    "./node": {
+      "types": "./node/index.d.ts",
+      "default": "./node/mod.js"
+    }
   },
   "dependencies": {
     "knitwork": "0.1.1",
@@ -43,18 +65,9 @@
   "scripts": {
     "build": "rollup -c",
     "test": "pnpm run test_unit",
-    "test_unit": "uvu src _test.js"
+    "test_unit": "uvu . _test.js"
   },
   "publishConfig": {
-    "directory": "dist",
-    "bin": {
-      "pika": "./vite_plugin/cli.js"
-    },
-    "exports": {
-      ".": "./vue_plugin/mod.js",
-      "./server": "./server/mod.js",
-      "./vite": "./vite_plugin/mod.js",
-      "./globals": "./globals/mod.js"
-    }
+    "directory": "dist"
   }
 }
