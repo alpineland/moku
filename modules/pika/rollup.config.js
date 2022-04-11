@@ -6,7 +6,7 @@ import { defineConfig } from 'rollup';
 
 fs.rmSync('./dist', { recursive: true, force: true });
 
-const format = 'esm';
+const format = 'es';
 const external = [
   ...Object.keys(pkg.peerDependencies),
   ...Object.keys(pkg.dependencies),
@@ -14,7 +14,7 @@ const external = [
 ];
 
 /** @returns {import('rollup').Plugin} */
-function injectModulePath() {
+function module_path_comment() {
   const cwd = process.cwd();
   return {
     transform(code, id) {
@@ -26,7 +26,7 @@ function injectModulePath() {
 }
 
 /** @returns {import('rollup').Plugin} */
-function pkgJSON() {
+function pkg_json() {
   const fields = [
     'name',
     'description',
@@ -54,8 +54,8 @@ function pkgJSON() {
 }
 
 const plugins = [
-  injectModulePath(),
-  pkgJSON(),
+  module_path_comment(),
+  pkg_json(),
   { transform: (code) => code.replace(/__VERSION__/g, pkg.version) },
   {
     writeBundle(opts) {

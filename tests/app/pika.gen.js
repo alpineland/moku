@@ -31,10 +31,6 @@ export const views = [
 
 export const endpoints = [
   {
-    pathname: '/:user/:org',
-    load: () => import('./routes/_user/_org.js'),
-  },
-  {
     pathname: '/:user/:repo',
     load: () => import('./routes/_user/_repo.js'),
     search: '_data=raw',
