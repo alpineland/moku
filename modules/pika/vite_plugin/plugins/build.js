@@ -1,6 +1,4 @@
 import path from 'path';
-import { walk } from '../utils.js';
-import { normalizePath } from 'vite';
 
 /**
  * @param {Required<import('~/types/mod').PluginSettings>} settings
@@ -14,7 +12,6 @@ export function plugin_build(settings) {
       const ssr = !!build?.ssr;
       root ||= process.cwd();
       const app_dir = path.join(root, settings.appDir);
-      const routes_dir = path.join(app_dir, settings.routesDir);
 
       /** @type {Record<string, string>} */
       const input = {};
@@ -24,13 +21,6 @@ export function plugin_build(settings) {
       } else {
         input['entry.client'] = path.join(app_dir, 'entry.client');
         input['__index_html__'] = path.join(root, 'index.html');
-      }
-
-      for await (const file of walk(routes_dir, /^\./)) {
-        if (!ssr && /\.[jt]s$/.test(file)) {
-          continue;
-        }
-        input[normalizePath(path.relative(app_dir, file))] = file;
       }
 
       return {

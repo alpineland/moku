@@ -1,5 +1,5 @@
 import { createUniApp } from './main.js';
-import { endpoints, views } from './pika.gen.js';
+import { endpoints, views } from './routes/mod.js';
 import { renderHeadToString } from '@vueuse/head';
 import { Server, renderDocumentToString } from 'pika/server';
 import { renderToString } from 'vue/server-renderer';
