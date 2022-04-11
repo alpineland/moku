@@ -31,7 +31,7 @@
         "default": "./server/mod.js"
       }
     },
-    "./vite": {
+    "./vite_plugin": {
       "import": {
         "types": "./vite_plugin/index.d.ts",
         "default": "./vite_plugin/mod.js"
