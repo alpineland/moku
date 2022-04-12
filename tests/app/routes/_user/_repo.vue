@@ -1,6 +1,6 @@
 <script setup>
 import { useHead } from '@vueuse/head';
-import { useData } from 'pika';
+import { useData } from 'pika/vue_plugin';
 import { useRoute, RouterLink } from 'vue-router';
 
 const data = useData();

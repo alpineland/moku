@@ -1,6 +1,6 @@
 import { views } from './routes/mod.js';
 import { createHead } from '@vueuse/head';
-import { Root, createPika } from 'pika';
+import { Root, createPika } from 'pika/vue_plugin';
 import { createSSRApp } from 'vue';
 import {
   createMemoryHistory,
