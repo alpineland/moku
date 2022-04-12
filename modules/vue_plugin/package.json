@@ -1,0 +1,19 @@
+{
+  "name": "@pika/vue",
+  "version": "0.0.0",
+  "type": "module",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./src/index.d.ts",
+        "default": "./src/mod.js"
+      }
+    }
+  },
+  "peerDependencies": {
+    "vite": "^2.8",
+    "vue": "^3.2",
+    "vue-router": "^4"
+  }
+}
