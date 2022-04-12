@@ -1,23 +1,8 @@
 {
   "name": "pika",
-  "description": "Vue Apps in a flash with web fundamentals",
   "version": "0.1.0",
   "type": "module",
   "types": "./types/pika.d.ts",
-  "author": "Jeff Yang",
-  "license": "MIT",
-  "keywords": [
-    "vue",
-    "vite",
-    "vite-plugin",
-    "pika"
-  ],
-  "engines": {
-    "node": ">=14.18"
-  },
-  "bin": {
-    "pika": "./vite_plugin/cli.js"
-  },
   "exports": {
     ".": {
       "import": {
@@ -43,36 +28,18 @@
         "types": "./vite_plugin/index.d.ts",
         "default": "./vite_plugin/mod.js"
       }
-    },
-    "./vue_plugin": {
-      "import": {
-        "types": "./vue_plugin/index.d.ts",
-        "default": "./vue_plugin/mod.js"
-      }
     }
   },
   "dependencies": {
-    "knitwork": "0.1.1",
-    "komando": "^1.0.2",
     "node-fetch": "^3.2.3",
-    "picocolors": "^1.0.0",
     "urlpattern-polyfill": "^4.0.2"
   },
-  "devDependencies": {
-    "vue": "3.2.31",
-    "vue-router": "4.0.14"
-  },
   "peerDependencies": {
-    "vite": "^2.8",
-    "vue": "^3.2",
-    "vue-router": "^4"
+    "vite": "^2.8"
   },
   "scripts": {
     "build": "rollup -c",
     "test": "pnpm run test_unit",
     "test_unit": "uvu . _test.js"
-  },
-  "publishConfig": {
-    "directory": "dist"
   }
 }
