@@ -21,10 +21,6 @@ export interface RequestHandler {
  */
 export interface SSRContext extends SSRManifest {
   /**
-   * The current request.
-   */
-  request: Request;
-  /**
    * The url to be used in `router.push`.
    * Must have the form like `/status?name=ryan`.
    */
@@ -37,9 +33,9 @@ export interface SSRManifest {
    */
   entryClient: string;
   /**
-   * The `index.html` template string
+   * The html template string
    */
-  html: string;
+  template: string;
 }
 
 type Awaitable<T> = Promise<T> | T;
@@ -48,29 +44,29 @@ type EndpointModule = {
   [method: string]: RequestHandler;
 };
 
-export interface ServerSettings {
-  matcher: Matcher;
+export interface ServerSettings<T = unknown> {
+  matcher: Matcher<T>;
   respondView: RespondView;
   respondEndpoint: RespondEndpoint;
   respondError: RespondError;
-  routes: any;
+  routes: T;
   trailingSlash?: boolean;
 }
 
 export interface RespondView {
-  (request: Request): Awaitable<Response>;
+  (request: Request, ctx: SSRContext): Awaitable<Response>;
 }
 
 export interface RespondEndpoint {
-  (request: Request, mod: EndpointModule): Awaitable<Response>;
+  (request: Request, ctx: SSRContext, mod: EndpointModule): Awaitable<Response>;
 }
 
 export interface RespondError {
-  (error: Error): Awaitable<Response>;
+  (request: Request, ctx: SSRContext, error: unknown): Awaitable<Response>;
 }
 
-export interface Matcher {
-  (routes): {
+export interface Matcher<T = unknown> {
+  (request: Request, routes: T): {
     respondView: RespondView;
     respondEndpoint: RespondEndpoint;
     respondError: RespondError;

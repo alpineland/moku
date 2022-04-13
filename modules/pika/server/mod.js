@@ -1,11 +1,16 @@
 import { etag, normalize_route } from './utils.js';
 
-export { etag }
+export { etag };
+
+/**
+ * @typedef {import('pika').SSRContext} SSRContext
+ * @typedef {(request: Request, ctx: SSRContext) => Promise<Response> } Respond
+ */
 
 /**
  *
  * @param {import('pika').ServerSettings} settings
- * @returns {{ respond: (request: Request) => Promise<Response> }}
+ * @returns {{respond: Respond}}
  */
 export function Server(settings) {
   settings = {
@@ -13,8 +18,8 @@ export function Server(settings) {
     ...settings,
   };
 
-  /** @param {Request} request */
-  async function respond(request) {
+  /** @type {Respond} */
+  async function respond(request, ctx) {
     const {
       matcher,
       routes,
@@ -40,16 +45,16 @@ export function Server(settings) {
       respondEndpoint: respond_endpoint = respondEndpoint,
       respondError: respond_error = respondError,
       respondView: respond_view = respondView,
-    } = matcher(routes);
+    } = matcher(request, routes);
 
     try {
       if (mod) {
-        return await respond_endpoint(request, mod);
+        return await respond_endpoint(request, ctx, mod);
       } else {
-        return await respond_view(request);
+        return await respond_view(request, ctx);
       }
-    } catch (e) {
-      return await respond_error(e);
+    } catch (err) {
+      return await respond_error(request, ctx, err);
     }
   }
 
@@ -57,7 +62,7 @@ export function Server(settings) {
 }
 
 /** @type {import('pika').RespondEndpoint} */
-export async function respondEndpoint(request, mod) {
+export async function respondEndpoint(request, _, mod) {
   const method = request.method.toLowerCase();
   let handler = mod[method];
 

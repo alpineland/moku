@@ -39,7 +39,7 @@ function ssr_middleware(vds, settings) {
       const protocol = config.server.https ? 'https' : 'http';
       const base = protocol + '://' + req.headers.host;
       const request = await getRequest(base, req);
-      const html = await vds.transformIndexHtml(
+      const template = await vds.transformIndexHtml(
         req.url,
         read_template(config.root, 'index.html'),
         req.originalUrl,
@@ -51,10 +51,9 @@ function ssr_middleware(vds, settings) {
 
       /** @type {import('pika').SSRContext} */
       const ssrContext = {
-        request,
         url: req.url,
         entryClient: get_entry(config, `${settings.appDir}/entry.client`),
-        html,
+        template,
       };
       const response = await server.respond(request, ssrContext);
 
