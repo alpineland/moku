@@ -8,8 +8,8 @@ export { etag };
  */
 
 /**
- *
- * @param {import('pika').ServerSettings} settings
+ * @template T
+ * @param {import('pika').ServerSettings<T>} settings
  * @returns {{respond: Respond}}
  */
 export function Server(settings) {
