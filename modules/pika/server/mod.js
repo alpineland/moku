@@ -10,7 +10,7 @@ export { etag };
 /**
  * @template T
  * @param {import('pika').ServerSettings<T>} settings
- * @returns {{respond: Respond}}
+ * @returns {{ respond: Respond }}
  */
 export function Server(settings) {
   settings = {
