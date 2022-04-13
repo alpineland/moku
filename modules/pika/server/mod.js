@@ -1,25 +1,31 @@
 import { etag, normalize_route } from './utils.js';
 
-export class Server {
-  /** @param {import('pika').ServerSettings} settings */
-  constructor(settings) {
-    this.endpoints = settings.endpoints;
-    this.trailing_slash = settings.trailingSlash;
-  }
+export { etag }
 
-  /**
-   * @param {{
-   *    request: Request
-   *    view: import('pika').ViewFn
-   *    endpoint: import('pika').EndpointFn
-   * }} args
-   * @returns {Promise<Response>}
-   */
-  async respond({ request, view, endpoint, error }) {
+/**
+ *
+ * @param {import('pika').ServerSettings} settings
+ * @returns {{ respond: (request: Request) => Promise<Response> }}
+ */
+export function Server(settings) {
+  settings = {
+    trailingSlash: false,
+    ...settings,
+  };
+
+  /** @param {Request} request */
+  async function respond(request) {
+    const {
+      matcher,
+      routes,
+      respondEndpoint,
+      respondError,
+      respondView,
+      trailingSlash,
+    } = settings;
     const url = new URL(request.url);
-    const normalized = normalize_route(url.pathname, this.trailing_slash);
+    const normalized = normalize_route(url.pathname, trailingSlash);
 
-    // trailing slash redirection
     if (normalized !== url.pathname) {
       return new Response(null, {
         status: 301,
@@ -29,104 +35,49 @@ export class Server {
       });
     }
 
-    /** @type {Response} */
-    let resp;
-    /** @type {{ [method: string]: import('pika').RequestHandler } | undefined} */
-    let mod;
-    /** @type {URLPatternComponentResult['groups'] | undefined} */
-    let params;
+    const {
+      mod,
+      respondEndpoint: respond_endpoint = respondEndpoint,
+      respondError: respond_error = respondError,
+      respondView: respond_view = respondView,
+    } = matcher(routes);
 
     try {
-      for (const { pathname, load, search } of this.endpoints) {
-        const result = new URLPattern({ pathname, search }).exec(request.url);
-        if (result !== null) {
-          params = result.pathname.groups;
-          mod = await load();
-          break;
-        }
-      }
-
-      if (mod && params) {
-        resp = endpoint
-          ? await endpoint()
-          : await this.respond_endpoint(request, mod, params);
+      if (mod) {
+        return await respond_endpoint(request, mod);
       } else {
-        resp = await view();
+        return await respond_view(request);
       }
-
-      return resp;
     } catch (e) {
-      return error ? await error() : await this.respond_error(request);
+      return await respond_error(e);
     }
   }
 
-  /**
-   * @param {Request} request
-   * @param {{ [method: string]: import('pika').RequestHandler }} mod
-   * @param {URLPatternComponentResult['groups']} params
-   * @returns {Promise<Response>}
-   */
-  async respond_endpoint(request, mod, params) {
-    const method = request.method.toLowerCase();
-    let handler = mod[method];
-
-    if (!handler && method === 'head') {
-      handler = mod.get;
-    }
-
-    if (!handler) return;
-
-    const resp = await handler({ request, params });
-    const { headers, body } = resp;
-
-    if (
-      (typeof body === 'string' || body instanceof Uint8Array) &&
-      !headers.has('etag')
-    ) {
-      const cc = headers.get('cache-control');
-
-      if (!cc || !/no-store|immutable/.test(cc)) {
-        headers.set('etag', await etag(body));
-      }
-    }
-
-    return resp;
-  }
-
-  async respond_error(request) {}
+  return { respond };
 }
 
-/**
- * @param {{
- *    headTags: string,
- *    htmlAttrs: string,
- *    appHtml: string,
- *    bodyAttrs: string,
- *    pika: { data: Record<any, any> },
- *    ssrContext: import('pika').SSRContext
- * }} args
- */
-export async function renderDocumentToString({
-  headTags,
-  htmlAttrs,
-  appHtml,
-  bodyAttrs,
-  pika,
-  ssrContext,
-}) {
-  const entry_client_attr = 'data-pika-' + (await etag(appHtml)).slice(0, 8);
-  const script = `
-  <script type="module" ${entry_client_attr}>
-    import { start } from "${ssrContext.entryClient}";
-    start({ el: document.querySelector("[${entry_client_attr}]").parentNode })
-  </script>
-  <script id="__PIKA_DATA__" type="application/json">
-    ${JSON.stringify(pika.data)}
-  </script>`;
+/** @type {import('pika').RespondEndpoint} */
+export async function respondEndpoint(request, mod) {
+  const method = request.method.toLowerCase();
+  let handler = mod[method];
 
-  return ssrContext.html
-    .replace('<html', `<html ${htmlAttrs}`)
-    .replace('<body', `<body ${bodyAttrs}`)
-    .replace('<!-- pika.head -->', headTags)
-    .replace('<!-- pika.app -->', appHtml + script);
+  if (!handler && method === 'head') {
+    handler = mod.get;
+  }
+
+  const resp = await handler({ request });
+  const { headers, body } = resp;
+
+  if (
+    (typeof body === 'string' || body instanceof Uint8Array) &&
+    !headers.has('etag')
+  ) {
+    const cc = headers.get('cache-control');
+
+    if (!cc || !/no-store|immutable/.test(cc)) {
+      headers.set('etag', await etag(body));
+    }
+  }
+
+  return resp;
 }

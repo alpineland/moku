@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "type": "module",
   "types": "./types/pika.d.ts",
+  "files": [
+    "globals",
+    "node",
+    "server",
+    "types",
+    "vite_plugin"
+  ],
   "exports": {
     ".": {
       "import": {
@@ -38,7 +45,6 @@
     "vite": "^2.8"
   },
   "scripts": {
-    "build": "rollup -c",
     "test": "pnpm run test_unit",
     "test_unit": "uvu . _test.js"
   }

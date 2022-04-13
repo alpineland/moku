@@ -45,7 +45,7 @@ function ssr_middleware(vds, settings) {
         req.originalUrl,
       );
 
-      const { start } = await vds.ssrLoadModule(
+      const { server } = await vds.ssrLoadModule(
         get_entry(config, `${settings.appDir}/entry.server`),
       );
 
@@ -56,7 +56,7 @@ function ssr_middleware(vds, settings) {
         entryClient: get_entry(config, `${settings.appDir}/entry.client`),
         html,
       };
-      const response = await start({ request, ssrContext });
+      const response = await server.respond(request, ssrContext);
 
       if (response) {
         setResponse(res, response);

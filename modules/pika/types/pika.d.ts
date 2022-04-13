@@ -42,12 +42,40 @@ export interface SSRManifest {
   html: string;
 }
 
+type Awaitable<T> = Promise<T> | T;
+
+type EndpointModule = {
+  [method: string]: RequestHandler;
+};
+
 export interface ServerSettings {
-  endpoints: Endpoint[];
-  floc: boolean;
-  template: string;
-  trailingSlash: boolean;
-  views: string[];
+  matcher: Matcher;
+  respondView: RespondView;
+  respondEndpoint: RespondEndpoint;
+  respondError: RespondError;
+  routes: any;
+  trailingSlash?: boolean;
+}
+
+export interface RespondView {
+  (request: Request): Awaitable<Response>;
+}
+
+export interface RespondEndpoint {
+  (request: Request, mod: EndpointModule): Awaitable<Response>;
+}
+
+export interface RespondError {
+  (error: Error): Awaitable<Response>;
+}
+
+export interface Matcher {
+  (routes): {
+    respondView: RespondView;
+    respondEndpoint: RespondEndpoint;
+    respondError: RespondError;
+    mod: EndpointModule;
+  };
 }
 
 /**
