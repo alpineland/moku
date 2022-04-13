@@ -81,3 +81,6 @@ export async function respondEndpoint(request, mod) {
 
   return resp;
 }
+
+/** @type {import('pika').RespondError} */
+export async function respondError(error) {}
