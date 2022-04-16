@@ -14,9 +14,12 @@ export function usePika() {
 }
 
 export function createPika() {
+  let tc
+  if (!import.meta.env.SSR) {
+    tc = document.getElementById('__PIKA_DATA__')?.textContent
+  }
   const pika = {
-    data: import.meta.env.SSR ? new Map() : new Map(JSON.parse(document.getElementById('__PIKA_DATA__')?.textContent)),
-    initialLoad: !import.meta.env.SSR,
+    data: tc ? JSON.parse(tc) : [],
     install(/** @type {import('vue').App} */ app) {
       app.provide(PIKA_KEY, this);
     },

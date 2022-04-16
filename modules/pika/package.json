@@ -9,6 +9,7 @@
     "server",
     "types",
     "vite_plugin",
+    "vue_plugin",
     "!**/*.test.js"
   ],
   "exports": {
@@ -36,6 +37,12 @@
         "types": "./vite_plugin/index.d.ts",
         "default": "./vite_plugin/mod.js"
       }
+    },
+    "./vue_plugin": {
+      "import": {
+        "types": "./vue_plugin/index.d.ts",
+        "default": "./vue_plugin/mod.js"
+      }
     }
   },
   "dependencies": {
@@ -43,7 +50,9 @@
     "urlpattern-polyfill": "^4.0.2"
   },
   "peerDependencies": {
-    "vite": "^2.8"
+    "vite": "^2.8",
+    "vue": "^3.2",
+    "vue-router": "^4"
   },
   "scripts": {
     "test": "pnpm run test_unit",

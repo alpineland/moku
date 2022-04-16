@@ -29,7 +29,7 @@ export async function renderDocumentToString({
     start({ el: document.querySelector("[${entry_client_attr}]").parentNode })
   </script>
   <script id="__PIKA_DATA__" type="application/json">
-    ${JSON.stringify(Array.from(pika.data.entries()))}
+    ${JSON.stringify(pika.data)}
   </script>`;
 
   return ssrContext.template
