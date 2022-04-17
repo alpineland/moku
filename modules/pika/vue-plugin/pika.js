@@ -14,9 +14,9 @@ export function usePika() {
 }
 
 export function createPika() {
-  let tc
+  let tc;
   if (!import.meta.env.SSR) {
-    tc = document.getElementById('__PIKA_DATA__')?.textContent
+    tc = document.getElementById('__PIKA_DATA__')?.textContent;
   }
   const pika = {
     data: tc ? JSON.parse(tc) : [],
