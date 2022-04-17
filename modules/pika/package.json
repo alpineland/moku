@@ -32,16 +32,16 @@
         "default": "./server/mod.js"
       }
     },
-    "./vite_plugin": {
+    "./vite-plugin": {
       "import": {
-        "types": "./vite_plugin/index.d.ts",
-        "default": "./vite_plugin/mod.js"
+        "types": "./vite-plugin/index.d.ts",
+        "default": "./vite-plugin/mod.js"
       }
     },
-    "./vue_plugin": {
+    "./vue-plugin": {
       "import": {
-        "types": "./vue_plugin/index.d.ts",
-        "default": "./vue_plugin/mod.js"
+        "types": "./vue-plugin/index.d.ts",
+        "default": "./vue-plugin/mod.js"
       }
     }
   },

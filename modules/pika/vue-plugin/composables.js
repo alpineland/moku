@@ -2,7 +2,7 @@ import { usePika } from './pika.js';
 import { onServerPrefetch, ref, useSSRContext } from 'vue';
 import { useRoute } from 'vue-router';
 
-export async function useData() {
+export async function useData(fn) {
   const pika = usePika()
   const fetching = ref(false)
   const data = ref()

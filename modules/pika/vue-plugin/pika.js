@@ -13,7 +13,11 @@ export function usePika() {
   return pika;
 }
 
-export function createPika() {
+/**
+ * @param {import('vue-router').Router} router 
+ * @returns {import('./types').Pika}
+ */
+export function createPika(router) {
   let tc
   if (!import.meta.env.SSR) {
     tc = document.getElementById('__PIKA_DATA__')?.textContent
@@ -24,5 +28,9 @@ export function createPika() {
       app.provide(PIKA_KEY, this);
     },
   };
+
+  router.afterEach(() => {
+  })
+
   return pika;
 }
