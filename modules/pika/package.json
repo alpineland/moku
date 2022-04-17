@@ -1,37 +1,52 @@
 {
   "name": "pika",
-  "description": "",
   "version": "0.1.0",
   "type": "module",
-  "author": "Jeff Yang",
-  "license": "MIT",
-  "keywords": [
-    "vue",
-    "vite",
+  "types": "./types/pika.d.ts",
+  "files": [
+    "globals",
+    "node",
+    "server",
+    "types",
     "vite-plugin",
-    "pika"
+    "vue-plugin",
+    "!**/*.test.js"
   ],
-  "engines": {
-    "node": ">=14.18"
-  },
-  "bin": {
-    "pika": "./src/vite_plugin/cli.js"
-  },
   "exports": {
-    ".": "./src/vue_plugin/mod.js",
-    "./server": "./src/server/mod.js",
-    "./vite": "./src/vite_plugin/mod.js",
-    "./globals": "./src/globals/mod.js"
+    ".": {
+      "import": {
+        "types": "./types/pika.d.ts"
+      }
+    },
+    "./globals": {
+      "types": "./globals/index.d.ts",
+      "default": "./globals/mod.js"
+    },
+    "./node": {
+      "types": "./node/index.d.ts",
+      "default": "./node/mod.js"
+    },
+    "./server": {
+      "import": {
+        "types": "./server/index.d.ts",
+        "default": "./server/mod.js"
+      }
+    },
+    "./vite-plugin": {
+      "import": {
+        "types": "./vite-plugin/index.d.ts",
+        "default": "./vite-plugin/mod.js"
+      }
+    },
+    "./vue-plugin": {
+      "import": {
+        "types": "./vue-plugin/index.d.ts",
+        "default": "./vue-plugin/mod.js"
+      }
+    }
   },
   "dependencies": {
-    "komando": "^1.0.2",
-    "node-fetch": "^3.2.3",
-    "picocolors": "^1.0.0"
-  },
-  "devDependencies": {
-    "vite": "2.8.6",
-    "vue": "3.2.31",
-    "vue-router": "4.0.14"
+    "node-fetch": "^3.2.3"
   },
   "peerDependencies": {
     "vite": "^2.8",
@@ -39,19 +54,7 @@
     "vue-router": "^4"
   },
   "scripts": {
-    "build": "rollup -c",
-    "test": "echo"
-  },
-  "publishConfig": {
-    "directory": "dist",
-    "bin": {
-      "pika": "./vite_plugin/cli.js"
-    },
-    "exports": {
-      ".": "./vue_plugin/mod.js",
-      "./server": "./server/mod.js",
-      "./vite": "./vite_plugin/mod.js",
-      "./globals": "./globals/mod.js"
-    }
+    "test": "pnpm run test_unit",
+    "test_unit": "uvu"
   }
 }

@@ -1,4 +1,4 @@
-import fetch, { Request, Response, Headers } from 'node-fetch'
+import fetch, { Request, Response, Headers } from 'node-fetch';
 
 export function installGlobals() {
   Object.defineProperties(globalThis, {
@@ -22,5 +22,5 @@ export function installGlobals() {
       configurable: true,
       value: Headers,
     },
-  })
+  });
 }
