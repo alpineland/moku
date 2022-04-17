@@ -1,6 +1,6 @@
 import { inject } from 'vue';
 
-const PIKA_KEY = Symbol('[pika]');
+const PIKA_KEY = Symbol(import.meta.env.DEV ? 'pika' : '');
 
 export function usePika() {
   const pika = inject(PIKA_KEY);
@@ -13,11 +13,7 @@ export function usePika() {
   return pika;
 }
 
-/**
- * @param {import('vue-router').Router} router 
- * @returns {import('./types').Pika}
- */
-export function createPika(router) {
+export function createPika() {
   let tc
   if (!import.meta.env.SSR) {
     tc = document.getElementById('__PIKA_DATA__')?.textContent
@@ -28,9 +24,6 @@ export function createPika(router) {
       app.provide(PIKA_KEY, this);
     },
   };
-
-  router.afterEach(() => {
-  })
 
   return pika;
 }

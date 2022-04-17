@@ -8,8 +8,8 @@
     "node",
     "server",
     "types",
-    "vite_plugin",
-    "vue_plugin",
+    "vite-plugin",
+    "vue-plugin",
     "!**/*.test.js"
   ],
   "exports": {
@@ -46,8 +46,7 @@
     }
   },
   "dependencies": {
-    "node-fetch": "^3.2.3",
-    "urlpattern-polyfill": "^4.0.2"
+    "node-fetch": "^3.2.3"
   },
   "peerDependencies": {
     "vite": "^2.8",

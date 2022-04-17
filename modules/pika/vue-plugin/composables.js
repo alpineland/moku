@@ -1,6 +1,5 @@
 import { usePika } from './pika.js';
 import { onServerPrefetch, ref, useSSRContext } from 'vue';
-import { useRoute } from 'vue-router';
 
 export async function useData(fn) {
   const pika = usePika()
@@ -9,11 +8,10 @@ export async function useData(fn) {
 
   if (import.meta.env.SSR) {
     onServerPrefetch(async () => {
-      const { request } = useSSRContext()
-      const { shadow } = useRoute().matched[pika.data.length].meta
-      const { get } = await shadow()
+      const ctx = useSSRContext()
+      const { get } = await fn()
       fetching.value = true
-      data.value = await get(request)
+      data.value = await get(ctx.request, ctx)
       pika.data.push(data.value)
       fetching.value = false
     })
