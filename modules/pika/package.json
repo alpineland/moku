@@ -49,7 +49,7 @@
     "node-fetch": "^3.2.3"
   },
   "peerDependencies": {
-    "vite": "^2.8",
+    "vite": "^2.9",
     "vue": "^3.2",
     "vue-router": "^4"
   },
