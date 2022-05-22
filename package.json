@@ -8,20 +8,20 @@
     "extends": "@ydcjeff"
   },
   "devDependencies": {
-    "@types/node": "17.0.24",
+    "@pika/svelte": "workspace:*",
+    "@pika/vue": "workspace:*",
+    "@types/node": "17.0.35",
     "@ydcjeff/eslint-config": "0.3.1",
     "@ydcjeff/prettier-config": "0.3.1",
     "@ydcjeff/tsconfig": "0.3.1",
-    "eslint": "8.13.0",
+    "eslint": "8.16.0",
     "pika": "workspace:*",
     "prettier": "2.6.2",
     "prompts": "2.4.2",
-    "rollup": "2.70.2",
     "semver": "7.3.7",
+    "svelte": "3.48.0",
     "uvu": "0.5.3",
-    "vite": "2.9.5",
-    "vue": "3.2.33",
-    "vue-router": "4.0.14"
+    "vite": "2.9.9"
   },
   "scripts": {
     "build": "pnpm run build -r",

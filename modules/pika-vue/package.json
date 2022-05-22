@@ -1,6 +1,6 @@
 {
-  "name": "pika",
-  "version": "0.1.0",
+  "name": "@pika/vue",
+  "version": "0.0.0",
   "type": "module",
   "types": "./index.d.ts",
   "exports": {
@@ -8,8 +8,14 @@
       "import": "./mod.js"
     }
   },
+  "devDependencies": {
+    "vue": "3.2.35",
+    "vue-router": "4.0.15"
+  },
   "peerDependencies": {
-    "vite": "^2.9"
+    "vite": "^2.9",
+    "vue": "^3.2",
+    "vue-router": "^4"
   },
   "scripts": {
     "test": "pnpm run test_unit",

@@ -1,6 +1,6 @@
 {
-  "name": "pika",
-  "version": "0.1.0",
+  "name": "@pika/svelte",
+  "version": "0.0.0",
   "type": "module",
   "types": "./index.d.ts",
   "exports": {
@@ -8,8 +8,14 @@
       "import": "./mod.js"
     }
   },
+  "devDependencies": {
+    "svelte": "3.48.0",
+    "svelte-ruta": "0.0.0"
+  },
   "peerDependencies": {
-    "vite": "^2.9"
+    "svelte": "^3.48.0",
+    "svelte-ruta": "^0.0.0",
+    "vite": "^2.9.5"
   },
   "scripts": {
     "test": "pnpm run test_unit",
