@@ -21,7 +21,7 @@
     "uvu": "0.5.3",
     "vite": "2.9.5",
     "vue": "3.2.33",
-    "vue-router": "4.0.14"
+    "vue-router": "4.0.16"
   },
   "scripts": {
     "build": "pnpm run build -r",
