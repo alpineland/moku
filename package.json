@@ -12,7 +12,7 @@
     "@ydcjeff/eslint-config": "0.3.1",
     "@ydcjeff/prettier-config": "0.3.1",
     "@ydcjeff/tsconfig": "0.3.1",
-    "eslint": "8.13.0",
+    "eslint": "8.17.0",
     "pika": "workspace:*",
     "prettier": "2.6.2",
     "prompts": "2.4.2",
