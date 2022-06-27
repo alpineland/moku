@@ -46,7 +46,7 @@
     }
   },
   "dependencies": {
-    "node-fetch": "^3.2.3"
+    "node-fetch": "^3.2.6"
   },
   "peerDependencies": {
     "vite": "^2.9",
