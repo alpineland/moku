@@ -2,10 +2,16 @@
   "name": "moku",
   "version": "0.1.0",
   "type": "module",
-  "types": "./index.d.ts",
+  "types": "./server/index.d.ts",
   "exports": {
-    ".": {
-      "import": "./mod.js"
+    "./ndoe": {
+      "import": "./node/mod.js"
+    },
+    "./server": {
+      "import": "./server/mod.js"
+    },
+    "./vite": {
+      "import": "./vite/mod.js"
     }
   },
   "peerDependencies": {

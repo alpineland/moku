@@ -2,7 +2,7 @@ export { Root } from './components/root.js';
 export { createPika, useData, usePika } from './composables.js';
 export { createMatchFunction } from './matcher.js';
 
-import { fnv1a } from 'moku';
+import { fnv1a } from 'moku/server';
 
 /**
  * @param {{

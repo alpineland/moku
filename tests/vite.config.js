@@ -1,6 +1,6 @@
 import vue from '@vitejs/plugin-vue';
 import inspect from 'vite-plugin-inspect';
-import { moku } from 'moku';
+import { moku } from 'moku/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({

@@ -1,8 +1,8 @@
 import { createUniApp } from './main.js';
 // import { views } from './routes/mod.js';
 import { renderHeadToString } from '@vueuse/head';
-import { create_handler } from 'moku';
 import { renderDocumentToString } from 'moku-vue';
+import { create_handler } from 'moku/server';
 import { renderToString } from 'vue/server-renderer';
 
 export const handler = create_handler({

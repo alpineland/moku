@@ -1,6 +1,6 @@
 <script setup>
 import { useHead } from '@vueuse/head';
-import { useData } from '@pika/vue';
+import { useData } from 'moku-vue';
 
 useHead({
   title: 'About',
