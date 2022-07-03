@@ -1,9 +1,8 @@
 export { Root } from './components/root.js';
-export { useData } from './composables.js';
+export { createPika, useData, usePika } from './composables.js';
 export { createMatchFunction } from './matcher.js';
-export { createPika, usePika } from './pika.js';
 
-import { etag } from 'pika/server';
+import { fnv1a } from 'moku';
 
 /**
  * @param {{
@@ -23,10 +22,10 @@ export async function renderDocumentToString({
   pika,
   ssrContext,
 }) {
-  const entry_client_attr = 'data-pika-' + (await etag(appHtml)).slice(0, 8);
+  const entry_client_attr = 'data-moku-' + fnv1a(appHtml);
   const script = `
   <script type="module" ${entry_client_attr}>
-    import { start } from "${ssrContext.entryClient}";
+    import { start } from "${ssrContext.entry_client}";
     start({ el: document.querySelector("[${entry_client_attr}]").parentNode })
   </script>
   <script id="__PIKA_DATA__" type="application/json">
@@ -36,6 +35,9 @@ export async function renderDocumentToString({
   return ssrContext.template
     .replace('<html', `<html ${htmlAttrs}`)
     .replace('<body', `<body ${bodyAttrs}`)
-    .replace('<!-- pika.head -->', headTags)
-    .replace('<!-- pika.app -->', appHtml + script);
+    .replace('</head>', headTags + '</head>')
+    .replace(
+      '</body>',
+      '<div id="__pika-vue">' + appHtml + '</div>' + script + '</body>',
+    );
 }

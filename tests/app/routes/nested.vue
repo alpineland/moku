@@ -3,7 +3,7 @@
 </script>
 
 <script setup>
-import { useData } from 'pika/vue-plugin';
+import { useData } from '@pika/vue';
 
 const { data, fetching } = await useData();
 </script>

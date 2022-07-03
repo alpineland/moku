@@ -1,6 +1,6 @@
 import { inject } from 'vue';
 
-const PIKA_KEY = Symbol(import.meta.env.DEV ? 'pika' : '');
+const PIKA_KEY = Symbol();
 
 export function usePika() {
   const pika = inject(PIKA_KEY);

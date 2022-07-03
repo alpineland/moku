@@ -1,6 +1,6 @@
 <script setup>
 import { useHead } from '@vueuse/head';
-import { useData } from 'pika/vue-plugin';
+import { useData } from '@pika/vue';
 
 useHead({
   title: 'About',

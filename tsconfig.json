@@ -1,5 +1,5 @@
 {
-  "extends": "@ydcjeff/tsconfig/tsconfig.json",
+  "extends": "@ydcjeff/configs/tsconfig",
   "compilerOptions": {
     "moduleResolution": "node",
     "types": ["vite/client", "svelte"]

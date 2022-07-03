@@ -54,7 +54,7 @@ function get_raw_body(req) {
  * @param {string} base
  * @param {import('http').IncomingMessage} req
  */
-export async function getRequest(base, req) {
+export async function get_request(base, req) {
   let headers = /** @type {Record<string, string>} */ (req.headers);
   if (req.httpVersionMajor === 2) {
     // we need to strip out the HTTP/2 pseudo-headers because node-fetch's
@@ -76,7 +76,7 @@ export async function getRequest(base, req) {
  * @param {import('http').ServerResponse} res
  * @param {Response} response
  */
-export async function setResponse(res, response) {
+export async function set_response(res, response) {
   const headers = Object.fromEntries(response.headers);
 
   if (response.headers.has('set-cookie')) {

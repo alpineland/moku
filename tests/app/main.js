@@ -1,7 +1,6 @@
 import { views } from './routes/mod.js';
 import { createHead } from '@vueuse/head';
-import { createPika, Root } from 'pika/vue-plugin';
-import { createPinia } from 'pinia';
+import { Root, createPika } from 'moku-vue';
 import { createSSRApp } from 'vue';
 import {
   createMemoryHistory,
@@ -19,12 +18,11 @@ export function createUniApp() {
       : createWebHistory(base),
     routes: views,
   });
-  const pika = createPika(router);
+  const pika = createPika();
 
   app.use(router);
   app.use(pika);
   app.use(head);
-  app.use(createPinia());
 
   return { app, router, pika, head };
 }

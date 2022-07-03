@@ -1,5 +1,5 @@
 {
-  "name": "@pika/vue",
+  "name": "moku-vue",
   "version": "0.0.0",
   "type": "module",
   "types": "./index.d.ts",

@@ -1,10 +1,10 @@
 import * as assert from 'uvu/assert';
-import { normalize_route } from './utils.js';
+import { normalise_route } from './utils.js';
 import { suite } from 'uvu';
 
-const normalize_route_suite = suite('normalize_route');
+const normalise_route_suite = suite('normalise_route');
 /** @type {Record<string, { t: string, f: string }>} */
-const normalize_route_fixtures = {
+const normalise_route_fixtures = {
   // root route
   '/': {
     t: '/',
@@ -64,18 +64,18 @@ const normalize_route_fixtures = {
   },
 };
 
-for (const pathname in normalize_route_fixtures) {
-  const { t, f } = normalize_route_fixtures[pathname];
+for (const pathname in normalise_route_fixtures) {
+  const { t, f } = normalise_route_fixtures[pathname];
 
-  normalize_route_suite(`normalize_route (true) ${pathname} -> ${t}`, () => {
-    const actual = normalize_route(pathname, true);
+  normalise_route_suite(`normalise_route (true) ${pathname} -> ${t}`, () => {
+    const actual = normalise_route(pathname, true);
     assert.equal(actual, t, `actual ${actual} !== expected ${t}`);
   });
 
-  normalize_route_suite(`normalize_route (false) ${pathname} -> ${f}`, () => {
-    const actual = normalize_route(pathname, false);
+  normalise_route_suite(`normalise_route (false) ${pathname} -> ${f}`, () => {
+    const actual = normalise_route(pathname, false);
     assert.equal(actual, f, `actual ${actual} !== expected ${f}`);
   });
 }
 
-normalize_route_suite.run();
+normalise_route_suite.run();

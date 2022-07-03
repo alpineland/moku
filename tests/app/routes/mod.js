@@ -3,7 +3,7 @@ const a = () => import('./a.server.js');
 /** @type {import('vue-router').RouteRecordRaw[]} */
 export const views = [
   {
-    path: '/user',
+    path: '/',
     component: () => import('./index.vue'),
     meta: {
       shadow: a,

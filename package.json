@@ -1,31 +1,26 @@
 {
-  "name": "pika-monorepo",
+  "name": "moku-monorepo",
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "prettier": "@ydcjeff/prettier-config",
-  "eslintConfig": {
-    "extends": "@ydcjeff"
-  },
+  "prettier": "@ydcjeff/configs/prettier",
   "devDependencies": {
-    "@pika/svelte": "workspace:*",
-    "@pika/vue": "workspace:*",
-    "@types/node": "17.0.35",
-    "@ydcjeff/eslint-config": "0.3.1",
-    "@ydcjeff/prettier-config": "0.3.1",
-    "@ydcjeff/tsconfig": "0.3.1",
-    "eslint": "8.16.0",
-    "pika": "workspace:*",
-    "prettier": "2.6.2",
+    "moku-svelte": "workspace:*",
+    "moku-vue": "workspace:*",
+    "@types/node": "18.0.1",
+    "@ydcjeff/configs": "0.4.3",
+    "eslint": "8.19.0",
+    "moku": "workspace:*",
+    "prettier": "2.7.1",
     "prompts": "2.4.2",
     "semver": "7.3.7",
     "svelte": "3.48.0",
-    "uvu": "0.5.3",
-    "vite": "2.9.9"
+    "uvu": "0.5.5",
+    "vite": "3.0.0-beta.5"
   },
   "scripts": {
-    "build": "pnpm run build -r",
-    "test": "pnpm run test -r",
+    "build": "pnpm run -r build",
+    "test": "pnpm run -r test",
     "fmt": "prettier -w --ignore-unknown .",
     "lint": "eslint --ext .js --ignore-path .gitignore .",
     "preinstall": "git config core.hooksPath .githooks"

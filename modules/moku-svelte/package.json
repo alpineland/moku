@@ -1,5 +1,5 @@
 {
-  "name": "@pika/svelte",
+  "name": "moku-svelte",
   "version": "0.0.0",
   "type": "module",
   "types": "./index.d.ts",

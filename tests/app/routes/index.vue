@@ -2,7 +2,7 @@
 import TheWelcome from '~/components/TheWelcome.vue';
 import { useHead } from '@vueuse/head';
 import { RouterLink, RouterView } from 'vue-router';
-import { useData } from 'pika/vue-plugin';
+import { useData } from '@pika/vue';
 
 useHead({
   title: 'Home',
